@@ -104,29 +104,27 @@ function o {
 
 #jump to bookmark in a new tab in the current window
 function t {
-	check_help $1
-	source $SDIRS
-	if [ -z $1 ]; then
-		dst="`pwd`"
-	elif [[ "$1" == "-" || "$1" == ".." || "$1" == '~' ||  "$1" == '/' ]]; then
-		dst="$1";
-	else
-        check_help $1
-        source $SDIRS
-		dst="$(eval $(echo echo $(echo \$DIR_$1)))"
-	fi
+    check_help $1
+    source $SDIRS
+    if [ -z $1 ]; then
+        dst="`pwd`"
+    elif [[ "$1" == "-" || "$1" == ".." || "$1" == '~' ||  "$1" == '/' ]]; then
+        dst="$1";
+    else
+        dst="$(eval $(echo echo $(echo \$DIR_$1)))"
+    fi
 
-	shift
-	osascript > /dev/null 2>&1 <<APPLESCRIPT
-		tell application "Terminal"
-			tell application "System Events"
-				tell process "Terminal" to keystroke "t" using command down
-				delay 0.1
-				keystroke "cd $dst; $*\n"
-			end tell
-		end tell
+    shift
+    osascript > /dev/null 2>&1 <<APPLESCRIPT
+        tell application "Terminal"
+            tell application "System Events"
+                tell process "Terminal" to keystroke "t" using command down
+                delay 0.1
+                keystroke "cd $dst; $*\n"
+            end tell
+        end tell
 APPLESCRIPT
-	__unset_dirs
+    __unset_dirs
 }
 
 
