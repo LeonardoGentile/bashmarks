@@ -1,4 +1,4 @@
-INSTALL_DIR=~/.local/bin
+INSTALL_DIR=~/.dotfiles/bin
 
 all:
 	@echo "Please run 'make install'"
